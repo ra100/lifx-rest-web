@@ -1,11 +1,11 @@
 {
-  "name": "lifx-web",
+  "name": "lifx-web-ui",
   "version": "1.0.0",
   "description": "Nuxt.js project",
   "author": "ra100 <git@ra100.net>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "NODE_ENV=devel node server/index.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -13,13 +13,24 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt-next": "^1.0.0-gh-449c99f"
+    "dgram": "^1.0.1",
+    "fastify": "^1.8.0",
+    "node-lifx": "^0.8.0",
+    "nuxt": "^1.4.1",
+    "vue": "^2.5.16",
+    "vue-meta": "^1.5.2",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.15.0",
+    "babel-eslint": "^8.2.6",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.7.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-vue": "^4.7.0",
+    "prettier": "^1.13.7",
+    "vue-eslint-parser": "^3.1.1"
   }
 }
