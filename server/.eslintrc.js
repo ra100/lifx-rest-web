@@ -8,8 +8,7 @@ module.exports = {
   extends: [
     'plugin:prettier/recommended'
   ],
-  plugins: [
-  ],
+  plugins: [],
   // add your custom rules here
   rules: {
     "semi": [2, "never"],
@@ -18,5 +17,11 @@ module.exports = {
       "semi": false,
       "singleQuote": true
     }],
+    "object-property-newline": ["error", {
+      "ObjectExpression": "always",
+      "ObjectPattern": {
+        "multiline": true
+      }
+    }]
   }
 }

@@ -26,6 +26,12 @@ module.exports = {
     "prettier/prettier": ["error", {
       "semi": false,
       "singleQuote": true
+    }],
+    "object-property-newline": ["error", {
+      "ObjectExpression": "always",
+      "ObjectPattern": {
+        "multiline": true
+      }
     }]
   }
 }

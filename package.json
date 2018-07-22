@@ -5,7 +5,7 @@
   "author": "ra100 <git@ra100.net>",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=devel node server/index.js",
+    "dev": "NODE_ENV=devel node --experimental-modules server/index.mjs",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -13,13 +13,10 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "dgram": "^1.0.1",
-    "fastify": "^1.8.0",
+    "express": "^4.16.3",
     "node-lifx": "^0.8.0",
     "nuxt": "^1.4.1",
     "vue": "^2.5.16",
-    "vue-meta": "^1.5.2",
-    "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
