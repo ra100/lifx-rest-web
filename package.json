@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "node-lifx": "^0.8.0",
     "nuxt": "^1.4.1",

@@ -5,16 +5,17 @@ const {
   Builder
 } = nuxt
 
-// Import and Set Nuxt.js options
-configNuxt.dev = !(process.env.NODE_ENV === 'production')
+export default () => {
+  // Import and Set Nuxt.js options
+  configNuxt.dev = !(process.env.NODE_ENV === 'production')
 
-// Init Nuxt.js
-const nuxtMiddleware = new Nuxt(configNuxt)
+  // Init Nuxt.js
+  const nuxtMiddleware = new Nuxt(configNuxt)
 
-// Build only in dev mode
-if (configNuxt.dev) {
-  const builder = new Builder(nuxtMiddleware)
-  builder.build()
+  // Build only in dev mode
+  if (configNuxt.dev) {
+    const builder = new Builder(nuxtMiddleware)
+    builder.build()
+  }
+  return nuxtMiddleware.render
 }
-
-export default nuxtMiddleware.render
