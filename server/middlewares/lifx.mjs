@@ -69,7 +69,7 @@ lightRouter.patch('/', async (req, res) => {
     if (hsbkChange) {
       await setHSBValue(req.light)(hsbk, duration)
     } else if (power) {
-      setLightStatus(req.light)(status, duration)
+      setLightStatus(req.light)(power, duration)
     }
   } catch ({
     status = 500,
