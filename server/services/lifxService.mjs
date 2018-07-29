@@ -1,7 +1,5 @@
 import nodeLifx from 'node-lifx'
 
-const client = new nodeLifx.Client()
-
 const p = fn =>
   new Promise((resolve, reject) => {
     fn((error, data) => {
@@ -23,30 +21,6 @@ export const findLight = identifier => lights.find(
   light.label === identifier ||
   light.address === identifier
 )
-
-client.on('light-new', light => {
-  lights.push(light)
-})
-
-client.on('light-online', light => {
-  const foundLight = findLight(light.id)
-  if (foundLight) {
-    lights = lights.map(l => (l.id === light.id ? light : l))
-    return
-  }
-  lights.push(light)
-})
-
-client.on('light-offline', light => {
-  const foundLight = findLight(light.id)
-  if (foundLight) {
-    lights = lights.map(l => (l.id === light.id ? light : l))
-    return
-  }
-  lights.push(light)
-})
-
-client.init()
 
 const mapLight = ({
   id,
@@ -81,6 +55,28 @@ export const getLightState = light => {
   )
 }
 
+function* getLightDetails() {
+  for (const light of lights) {
+    if (light.status === 'off') {
+      yield Promise.resolve(getLight(light))
+    } else {
+      yield getLightState(light);
+    }
+  }
+}
+
+export const getMetrics = async () => {
+  try {
+    const lights = []
+    for (let light of getLightDetails()) {
+      lights.push(await light)
+    }
+    return lights
+  } catch (e) {
+    throw (e)
+  }
+}
+
 export const setLightStatus = light => (power, duration = 1000) => light[power === 0 ? "off" : "on"](duration)
 
 const argPosition = {
@@ -113,3 +109,40 @@ export const setHSBValue = light => (values, duration) => new Promise((resolve, 
     return resolve()
   })
 )
+
+export default () => {
+  const client = new nodeLifx.Client()
+
+  client.on('light-new', light => {
+    lights.push(light)
+  })
+
+  client.on('light-online', light => {
+    const foundLight = findLight(light.id)
+    if (foundLight) {
+      lights = lights.map(l => (l.id === light.id ? light : l))
+      return
+    }
+    lights.push(light)
+  })
+
+  client.on('light-offline', light => {
+    const foundLight = findLight(light.id)
+    if (foundLight) {
+      lights = lights.map(l => (l.id === light.id ? light : l))
+      return
+    }
+    lights.push(light)
+  })
+
+  client.init()
+  return {
+    getLights,
+    getLight,
+    getLightState,
+    setLightStatus,
+    setHSBValue,
+    findLight,
+    getMetrics
+  }
+}

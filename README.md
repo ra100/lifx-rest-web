@@ -109,3 +109,7 @@ Send in payload what you want to change, duration can be omitted:
 ```
 
 for value ranges see [node-lifx](https://github.com/MariusRumpf/node-lifx)
+
+### `GET /metrics`
+
+Returns status of all lights, default in prometheus.io format. If `Accept` header is set to `application/json` then stats are returned as JSON array.
