@@ -1,5 +1,8 @@
 import express from 'express'
-import lightService from '../services/lifxService'
+import lightService, {
+  getLight,
+  getLightState
+} from '../services/lifxService'
 import prometheusMetrics from '../services/prometheusMetrics'
 
 const router = new express.Router()
