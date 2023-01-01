@@ -1,9 +1,9 @@
 import express from 'express'
 import lightService, {
   getLight,
-  getLightState
-} from '../services/lifxService'
-import prometheusMetrics from '../services/prometheusMetrics'
+  getLightState,
+} from '../services/lifxService.mjs'
+import prometheusMetrics from '../services/prometheusMetrics.mjs'
 
 const router = new express.Router()
 const lightRouter = new express.Router()
@@ -21,7 +21,7 @@ lightRouter.use((req, res, next) => {
   }
   if (light.status !== 'on') {
     return res.status(410).json({
-      message: 'Light is currently offline'
+      message: 'Light is currently offline',
     })
   }
   req.light = light
@@ -34,11 +34,8 @@ lightRouter.get('/', (req, res) => {
 
 lightRouter.get('/state', (req, res) =>
   getLightState(req.light)
-  .then(light => res.status(200).json(light))
-  .catch(({
-    status = 500,
-    error
-  }) => res.status(status).json(error))
+    .then((light) => res.status(200).json(light))
+    .catch(({ status = 500, error }) => res.status(status).json(error))
 )
 
 lightRouter.patch('/', async (req, res) => {
@@ -48,7 +45,7 @@ lightRouter.patch('/', async (req, res) => {
     brightness,
     saturation,
     hue,
-    kelvin
+    kelvin,
   } = req.body
   try {
     const hsbk = {}
@@ -74,12 +71,9 @@ lightRouter.patch('/', async (req, res) => {
     } else if (power !== undefined) {
       lights.setLightStatus(req.light)(power, duration)
     }
-  } catch ({
-    status = 500,
-    message
-  }) {
+  } catch ({ status = 500, message }) {
     return res.status(status).json({
-      error: message
+      error: message,
     })
   }
   return res.status(204).send()
